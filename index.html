@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pour ANNA</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background: #111;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .container {
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    #message {
+        opacity: 0;
+        font-size: 1.2rem;
+        margin-top: 20px;
+        transition: opacity 1.5s ease;
+    }
+
+    button {
+        margin-top: 30px;
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        background: #ff3366;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        cursor: pointer;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #ff4d7a;
+    }
+
+    #hiddenText {
+        margin-top: 25px;
+        opacity: 0;
+        font-size: 1.2rem;
+        transition: opacity 1.5s ease;
+    }
+
+    /* Hearts that float upward (default) */
+    .heart {
+        position: absolute;
+        color: #ff3366;
+        animation: floatUp 1.5s linear infinite;
+        opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+        0% { transform: translateY(0); opacity: 0.9; }
+        100% { transform: translateY(-250px); opacity: 0; }
+    }
+
+    /* Hearts falling downward (ON TAP) */
+    .heartDown {
+        position: absolute;
+        color: #ff3366;
+        animation: floatDown 1.7s linear forwards;
+        opacity: 0.9;
+    }
+
+    @keyframes floatDown {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(250px); opacity: 0; }
+    }
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h1 id="typewriter"></h1>
+    <p id="message">Si vous ne le saviez pas déjà, vous le saurez maintenant avec certitude.</p>
+
+    <button onclick="showHidden()">Appuyez ici pour obtenir un signal mixte</button>
+    <p id="hiddenText"></p>
+</div>
+
+<script>
+    // Typewriter effect
+    const text = "pour ANNA"; 
+    let i = 0;
+
+    function typeWriter() {
+        if (i < text.length) {
+            document.getElementById("typewriter").innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 100);
+        } else {
+            setTimeout(() => {
+                document.getElementById("message").style.opacity = 1;
+            }, 500);
+        }
+    }
+    typeWriter();
+
+    // Hearts that float upward (automatic)
+    function createHeartUp() {
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = window.innerHeight + "px";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 1500);
+    }
+    setInterval(createHeartUp, 300);
+
+    // Hearts falling downward (on tap)
+    function createHeartDown() {
+        let heart = document.createElement("div");
+        heart.classList.add("heartDown");
+        heart.innerHTML = "❤";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = "0px"; // from top!
+        heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 1700);
+    }
+
+    // Hidden message + falling hearts
+    function showHidden() {
+        document.getElementById("hiddenText").style.opacity = 1;
+
+        for (let i = 0; i < 20; i++) {
+            createHeartDown();
+        }
+    }
+</script>
+
+</body>
+</html>
